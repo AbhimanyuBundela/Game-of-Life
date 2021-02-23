@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class GameRules : MonoBehaviour
 {
     //Grid Size
-    [SerializeField] private int width = 6;
-    [SerializeField] private int height = 6;
+    private int width = 6;
+    private int height = 6;
 
     //Cell Prefab
     [SerializeField] private Cell cellPrefab = null;
@@ -19,14 +19,16 @@ public class GameRules : MonoBehaviour
     [SerializeField] private Button _stop;
 
     //Rules
-    [SerializeField] private int _underPopulationLimit = 2;
-    [SerializeField] private int _overPopulationLimit = 3;
+    private int _underPopulationLimit = 2;
+    private int _overPopulationLimit = 3;
+    private int _rebirthConditionValue = 3;
 
     //Sliders to set various Values
     [SerializeField] private Slider _gridWidth;
     [SerializeField] private Slider _gridHeight;
     [SerializeField] private Slider _underPopulationUpperLimit;
     [SerializeField] private Slider _overPopulationLowerLimit;
+    [SerializeField] private Slider _rebirthCondition;
 
     public float _frameSpeed = 0.1f;
 
@@ -175,7 +177,7 @@ public class GameRules : MonoBehaviour
                 else
                 {
                     //dead cells with exactly 3 live cells gets to life
-                    if(grid[x, y].neighbours == _overPopulationLimit)
+                    if(grid[x, y].neighbours == _rebirthConditionValue)
                     {
                         grid[x, y].SetAlive(true);
                     }
@@ -191,6 +193,7 @@ public class GameRules : MonoBehaviour
         height = (int)_gridHeight.value;
         _underPopulationLimit = (int)_underPopulationUpperLimit.value;
         _overPopulationLimit = (int)_overPopulationLowerLimit.value;
+        _rebirthConditionValue = (int)_rebirthCondition.value;
 
         _placeCells.interactable = true;
         _rulesSet.interactable = false;
